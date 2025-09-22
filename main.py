@@ -523,7 +523,7 @@ class App(tk.Tk):
             "720p": "res:720",
             "480p": "res:480",
             "360p": "res:360",
-            "ファイルサイズ最小": "+size",
+            "最小ファイルサイズ": "+size",
         }
 
         filename_template = self.filename_template_var.get()
@@ -531,8 +531,8 @@ class App(tk.Tk):
             filename_template = "%(title)s [%(id)s]"
 
         output_template = save_path / f"{filename_template}.%(ext)s"
-        format_type = self.format_var.get().partition(" ")[0]
-        ext = None if format_type.startswith("最良") else format_type.partition("-")[0]
+        format_type = self.format_var.get()#.partition(" ")[0]
+        ext = None if format_type.startswith("最良") else format_type.partition("+")[0]
 
         ydl_opts = {
             "outtmpl": str(output_template),
@@ -568,7 +568,7 @@ class App(tk.Tk):
         else:
             sort_list = [q] if (q := quality_map.get(self.quality_var.get())) else []
             if ext:  # format_type != "最良動画"
-                if format_type == "mp4-h.264+aac":
+                if format_type == "mp4+aac":
                     sort_list += [
                         "vcodec:h264", "lang", "quality", "res", "fps", "hdr:12", "acodec:aac"
                     ]
